@@ -1,0 +1,8 @@
+certifi==2024.2.2
+charset-normalizer==3.3.2
+idna==3.6
+mutf8==1.0.6
+numpy==1.26.4
+PyNBT==3.1.0
+requests==2.31.0
+urllib3==2.2.1
