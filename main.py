@@ -11,12 +11,13 @@ def main():
     while True:
         raw_auctions = get_ended_auctions()
         auctions = [sanitize_auction(a) for a in raw_auctions]
-        new_hyps = [a for a in auctions if a['item']['id'] == 'HYPERION']
         
-        for item in new_hyps:
-            print("ding!")
-            store_item(item["auction_id"], item["price"], item["item"]["id"], json.dumps(item["item"]))
-
+        for item in auctions:
+            try:
+                store_item(item["auction_id"], item["price"], item["item"]["id"], json.dumps(item["item"]))
+            except:
+                pass
+            
         time.sleep(60)
     
 def sanitize_auction(raw):
@@ -31,6 +32,13 @@ def sanitize_auction(raw):
     item_dict = nbt_to_dict(item_nbt['i'][0]['tag']['ExtraAttributes'])
         
     auction['item'] = item_dict
+    
+    # santize petInfo because its weird
+    if(auction['item']['id'] == 'PET'):
+        # for some reason petInfo is json string, parse it to a dict
+        auction['item']['petInfo'] = json.loads(auction['item']['petInfo'])
+        # add pet type to item_id
+        auction['item']['id'] = f"{auction['item']['id']}_{auction['item']['petInfo']['type']}"
     
     return auction
 

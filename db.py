@@ -19,5 +19,6 @@ def store_item(auction_id, price, item_id, item_data):
         item_id,
         item_data
     ) VALUES(?,?,?,?)
+    ON CONFLICT DO NOTHING
     ''', (auction_id, price, item_id, item_data))
     connection.commit()
