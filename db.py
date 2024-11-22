@@ -1,6 +1,6 @@
 import sqlite3
 
-connection = sqlite3.connect('db.sqlite')
+connection = sqlite3.connect('auctions.sqlite')
 cursor = connection.cursor()
 
 cursor.execute('''
